@@ -1,7 +1,7 @@
-FROM adoptopenjdk/openjdk12
+FROM adoptopenjdk/openjdk12:latest
 
 COPY build/libs/*.jar /libs/app.jar
 
 EXPOSE 3005
 
-ENTRYPOINT ["java", "-server", "-jar", "/libs/app.jar"]
+ENTRYPOINT ["java", "-jar", "/libs/app.jar"]
