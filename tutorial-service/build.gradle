@@ -47,10 +47,6 @@ dependencyManagement {
 	}
 }
 
-bootJar {
-	mainClassName = 'com.monda.sledu.tutorial.TutorialApplication'
-}
-
 test {
 	useJUnitPlatform()
 }
