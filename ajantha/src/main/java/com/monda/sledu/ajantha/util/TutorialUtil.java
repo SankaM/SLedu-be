@@ -27,4 +27,22 @@ public final class TutorialUtil {
 
         return questionDTO;
     }
+
+    public static Question getQuestion(QuestionDTO questionDTO){
+        Question question = new Question();
+        question.setId(questionDTO.getId());
+        question.setCorrectAnswer(questionDTO.getCorrectAnswer());
+        question.setQuestion(questionDTO.getQuestion());
+        question.setQuestionImgUrl(questionDTO.getQuestionImgUrl());
+        question.setSolution(questionDTO.getSolution());
+        question.setTheory(questionDTO.getTheory());
+
+        StringBuilder s = new StringBuilder();
+        List<String> otherAnswerList = questionDTO.getOtherAnswers();
+        otherAnswerList.forEach(x-> s.append(x).append(","));
+        String otherAnswers = s.toString().substring(0, s.length()-1);
+        question.setOtherAnswers(otherAnswers);
+
+        return question;
+    }
 }

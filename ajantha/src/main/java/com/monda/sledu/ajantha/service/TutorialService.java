@@ -26,5 +26,10 @@ public class TutorialService {
         return questions.stream().map(TutorialUtil::getQuestionDTO).collect(Collectors.toList());
     }
 
+    public void addQuestion(QuestionDTO questionDTO){
+        Question question = TutorialUtil.getQuestion(questionDTO);
+        tutorialRepository.save(question);
+    }
+
 
 }
