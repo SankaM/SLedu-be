@@ -11,6 +11,8 @@ spring:
   h2:
     console:
       enabled: true
+  flyway:
+      enabled: true
 # set file base memory so data will not lost when application restart
 #spring.datasource.url=jdbc:h2:file:/data/demo
 
