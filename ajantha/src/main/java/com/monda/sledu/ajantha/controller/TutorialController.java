@@ -12,6 +12,11 @@ import com.monda.sledu.ajantha.model.dto.QuestionDTO;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @RestController
@@ -26,17 +31,18 @@ public class TutorialController {
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/questions", method = GET)
+    @GetMapping(value = "/questions")
+    @ResponseStatus(code = HttpStatus.OK)
     public List<QuestionDTO> questions() {
         return tutorialService.getAllQuestions();
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/questions", method = POST, consumes = "application/json")
-    public void addQuestion( @RequestBody QuestionDTO questionDTO) {
+    @PostMapping(value = "/questions")
+    public ResponseEntity<Void> addQuestion(@RequestBody QuestionDTO questionDTO) {
 
-       // QuestionDTO newQ = new QuestionDTO(id, question,  questionImgUrl, theory, solution, correctAnswer,  otherAnswers);
         tutorialService.addQuestion(questionDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }
