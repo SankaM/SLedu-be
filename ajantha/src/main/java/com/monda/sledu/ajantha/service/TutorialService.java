@@ -31,5 +31,9 @@ public class TutorialService {
         tutorialRepository.save(question);
     }
 
+    public void deleteQuestion(Integer id){
+        tutorialRepository.deleteById(id);
+    }
+
 
 }
