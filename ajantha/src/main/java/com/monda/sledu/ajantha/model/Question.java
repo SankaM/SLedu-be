@@ -19,35 +19,32 @@ public class Question {
     @Column(name = "id")
     @JsonIgnore
     @Id
-    public Integer id;
+    private Integer id;
+
+    @Column(name = "grade_id")
+    private Integer gradeId;
+
+    @Column(name = "subject_id")
+    private Integer subjectId;
 
     @Column(name = "question")
-    public String question;
+    private String question;
 
     @Column(name = "question_img_Url")
-    public String questionImgUrl;
+    private String questionImgUrl;
 
     @Column(name = "theory")
-    public String theory;
+    private String theory;
 
     @Column(name = "solution")
-    public String solution;
+    private String solution;
 
     @Column(name = "correct_answer")
-    public String correctAnswer;
+    private String correctAnswer;
 
     @Column(name = "other_answers")
-    public String otherAnswers;
+    private String otherAnswers;
 
-//    public Question(Integer id, String question, String questionImgUrl, String theory, String solution, String correctAnswer, String otherAnswers) {
-//        this.id = id;
-//        this.question = question;
-//        this.questionImgUrl = questionImgUrl;
-//        this.theory = theory;
-//        this.solution = solution;
-//        this.correctAnswer = correctAnswer;
-//        this.otherAnswers = otherAnswers;
-//    }
 }
 
 

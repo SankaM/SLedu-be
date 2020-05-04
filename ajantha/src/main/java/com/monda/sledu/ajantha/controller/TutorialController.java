@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import com.monda.sledu.ajantha.service.TutorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.monda.sledu.ajantha.model.dto.QuestionDTO;
 import java.util.List;
@@ -16,40 +15,55 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import com.monda.sledu.ajantha.model.Subject;
+import com.monda.sledu.ajantha.model.Grade;
+import com.monda.sledu.ajantha.service.TutorService;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/tutorials")
+@CrossOrigin(origins = "*")
+@RequestMapping("/v1/tutor")
 public class TutorialController {
 
-    private TutorialService tutorialService;
+    private TutorService tutorService;
 
     @Autowired
-    public TutorialController(TutorialService tutorialService){
-        this.tutorialService = tutorialService;
+    public TutorialController(com.monda.sledu.ajantha.service.TutorService tutorService){
+        this.tutorService = tutorService;
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping(value = "/questions")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<QuestionDTO> questions() {
-        return tutorialService.getAllQuestions();
+    public List<QuestionDTO> questions(@RequestParam Integer subjectId) {
+        return tutorService.getQuestionsBySubject(subjectId);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping(value = "/questions")
     public ResponseEntity<Void> addQuestion(@RequestBody QuestionDTO questionDTO) {
 
-        tutorialService.addQuestion(questionDTO);
+        tutorService.addQuestion(questionDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping(value = "/questions")
     public ResponseEntity<Void> deleteQuestion(@RequestParam Integer id) {
 
-        tutorialService.deleteQuestion(id);
+        tutorService.deleteQuestion(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/subjects")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<Subject> getAllSubjectsByGrade(@RequestParam Integer gradeId) {
+
+        return tutorService.getAllSubjectsByGrade(gradeId);
+    }
+
+    @GetMapping(value = "/grades")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<Grade> getAllGradsByMedium(@RequestParam String medium) {
+
+        return tutorService.getAllGradesByMedium(medium);
     }
 
 }

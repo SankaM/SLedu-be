@@ -19,6 +19,8 @@ public final class TutorialUtil {
         questionDTO.setQuestionImgUrl(question.getQuestionImgUrl());
         questionDTO.setSolution(question.getSolution());
         questionDTO.setTheory(question.getTheory());
+        questionDTO.setGradeId(question.getGradeId());
+        questionDTO.setSubjectId(question.getSubjectId());
 
         String otherAnswerStr = question.getOtherAnswers();
         String[] otherAnswerArr = otherAnswerStr.split(",");

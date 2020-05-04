@@ -11,6 +11,8 @@ import java.util.List;
 public class QuestionDTO {
 
     public Integer id;
+    private Integer gradeId;
+    private Integer subjectId;
     public String question;
     public String questionImgUrl;
     public String theory;
@@ -18,8 +20,10 @@ public class QuestionDTO {
     public String correctAnswer;
     public List<String> otherAnswers;
 
-    public QuestionDTO(Integer id, String question, String questionImgUrl, String theory, String solution, String correctAnswer, java.util.List<String> otherAnswers) {
+    public QuestionDTO(Integer id, Integer gradeId, Integer subjectId, String question, String questionImgUrl, String theory, String solution, String correctAnswer, java.util.List<String> otherAnswers) {
         this.id = id;
+        this.gradeId = gradeId;
+        this.subjectId = subjectId;
         this.question = question;
         this.questionImgUrl = questionImgUrl;
         this.theory = theory;
