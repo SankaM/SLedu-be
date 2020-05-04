@@ -19,8 +19,7 @@ public final class TutorialUtil {
         questionDTO.setQuestionImgUrl(question.getQuestionImgUrl());
         questionDTO.setSolution(question.getSolution());
         questionDTO.setTheory(question.getTheory());
-        questionDTO.setGradeId(question.getGradeId());
-        questionDTO.setSubjectId(question.getSubjectId());
+        questionDTO.setLessonId(question.getLessonId());
 
         String otherAnswerStr = question.getOtherAnswers();
         String[] otherAnswerArr = otherAnswerStr.split(",");
@@ -38,6 +37,7 @@ public final class TutorialUtil {
         question.setQuestionImgUrl(questionDTO.getQuestionImgUrl());
         question.setSolution(questionDTO.getSolution());
         question.setTheory(questionDTO.getTheory());
+        question.setLessonId(questionDTO.getLessonId());
 
         StringBuilder s = new StringBuilder();
         List<String> otherAnswerList = questionDTO.getOtherAnswers();

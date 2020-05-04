@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import com.monda.sledu.ajantha.model.Subject;
 import com.monda.sledu.ajantha.model.Grade;
 import com.monda.sledu.ajantha.service.TutorService;
+import com.monda.sledu.ajantha.model.Lesson;
 
 @Slf4j
 @RestController
@@ -34,22 +35,21 @@ public class TutorialController {
 
     @GetMapping(value = "/questions")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<QuestionDTO> questions(@RequestParam Integer subjectId) {
-        return tutorService.getQuestionsBySubject(subjectId);
+    public List<QuestionDTO> getQuestionsByLessonId(@RequestParam Integer lessonId) {
+        return tutorService.getQuestionsByLessonId(lessonId);
     }
 
     @PostMapping(value = "/questions")
-    public ResponseEntity<Void> addQuestion(@RequestBody QuestionDTO questionDTO) {
-
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void addQuestion(@RequestBody QuestionDTO questionDTO) {
         tutorService.addQuestion(questionDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/questions")
-    public ResponseEntity<Void> deleteQuestion(@RequestParam Integer id) {
+    @ResponseStatus(code = HttpStatus.OK)
+    public void deleteQuestion(@RequestParam Integer id) {
 
         tutorService.deleteQuestion(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/subjects")
@@ -64,6 +64,13 @@ public class TutorialController {
     public List<Grade> getAllGradsByMedium(@RequestParam String medium) {
 
         return tutorService.getAllGradesByMedium(medium);
+    }
+
+    @GetMapping(value = "/lessons")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<Lesson> getAllLessonsBySubject(@RequestParam Integer subjectId) {
+
+        return tutorService.getAllLessonsBySubject(subjectId);
     }
 
 }

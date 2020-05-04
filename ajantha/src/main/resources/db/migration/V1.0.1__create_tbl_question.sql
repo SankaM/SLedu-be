@@ -10,10 +10,16 @@ CREATE TABLE sledu.t_subject (
  name varchar(100)
 );
 
+CREATE TABLE sledu.t_lesson (
+ id int,
+ subject_id int,
+ name varchar(100),
+ image_url varchar(255)
+);
+
 CREATE TABLE sledu.t_question (
  id int,
- grade_id int,
- subject_id int,
+ lesson_id int,
  question varchar(255),
  correct_answer varchar(255),
  other_answers varchar(255),

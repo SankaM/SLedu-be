@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.Column;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Id;
 
 @Table(name = "t_grade", schema = "sledu")

@@ -21,11 +21,8 @@ public class Question {
     @Id
     private Integer id;
 
-    @Column(name = "grade_id")
-    private Integer gradeId;
-
-    @Column(name = "subject_id")
-    private Integer subjectId;
+    @Column(name = "lesson_id")
+    private Integer lessonId;
 
     @Column(name = "question")
     private String question;

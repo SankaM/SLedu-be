@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface TutorialRepository extends JpaRepository<Question, Integer> {
 
-    List<Question> findBySubjectId(Integer subjectId);
+    List<Question> findByLessonId(Integer lessonId);
 }

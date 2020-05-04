@@ -13,6 +13,8 @@ import com.monda.sledu.ajantha.model.Subject;
 import com.monda.sledu.ajantha.repository.SubjectRepository;
 import com.monda.sledu.ajantha.repository.GradeRepository;
 import com.monda.sledu.ajantha.model.Grade;
+import com.monda.sledu.ajantha.model.Lesson;
+import com.monda.sledu.ajantha.repository.LessonRepository;
 
 @Service
 @Setter
@@ -21,16 +23,18 @@ public class TutorService {
     private TutorialRepository tutorialRepository;
     private SubjectRepository subjectRepository;
     private GradeRepository gradeRepository;
+    private LessonRepository lessonRepository;
 
     @Autowired
-    public TutorService(TutorialRepository tutorialRepository, SubjectRepository subjectRepository, GradeRepository gradeRepository){
+    public TutorService(TutorialRepository tutorialRepository, SubjectRepository subjectRepository, GradeRepository gradeRepository, com.monda.sledu.ajantha.repository.LessonRepository lessonRepository){
         this.tutorialRepository = tutorialRepository;
         this.subjectRepository = subjectRepository;
         this.gradeRepository = gradeRepository;
+        this.lessonRepository = lessonRepository;
     }
 
-    public List<QuestionDTO> getQuestionsBySubject(Integer subjectId){
-        List<Question> questions = tutorialRepository.findBySubjectId(subjectId);
+    public List<QuestionDTO> getQuestionsByLessonId(Integer lessonId){
+        List<Question> questions = tutorialRepository.findByLessonId(lessonId);
         return questions.stream().map(TutorialUtil::getQuestionDTO).collect(Collectors.toList());
     }
 
@@ -49,6 +53,10 @@ public class TutorService {
 
     public List<Grade> getAllGradesByMedium(String medium){
         return gradeRepository.findByMedium(medium);
+    }
+
+    public List<Lesson> getAllLessonsBySubject(Integer subjectId){
+        return lessonRepository.findBySubjectId(subjectId);
     }
 
 
