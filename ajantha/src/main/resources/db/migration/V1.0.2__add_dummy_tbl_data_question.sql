@@ -10,6 +10,11 @@ insert into sledu.t_subject values(1, 1, 'Mathematics');
 insert into sledu.t_subject values(2, 2, 'ගණිතය');
 insert into sledu.t_subject values(3, 1, 'English');
 insert into sledu.t_subject values(4, 2, 'සිංහල');
+insert into sledu.t_subject values(5, 3, 'Mathematics');
+insert into sledu.t_subject values(6, 6, 'ගණිතය');
+insert into sledu.t_subject values(7, 3, 'English');
+insert into sledu.t_subject values(8, 6, 'සිංහල');
+
 
 insert into sledu.t_lesson values(1, 2, 'වර්ගඵලය', 'https://sl-edu.s3-ap-southeast-1.amazonaws.com/cover-images/_5area.jpg' );
 insert into sledu.t_lesson values(2, 2, 'පරිමිතිය', 'https://sl-edu.s3-ap-southeast-1.amazonaws.com/cover-images/_5parimithiya.png');
