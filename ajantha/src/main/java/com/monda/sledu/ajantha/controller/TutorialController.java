@@ -9,7 +9,6 @@ import com.monda.sledu.ajantha.model.dto.QuestionDTO;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -19,6 +18,8 @@ import com.monda.sledu.ajantha.model.Subject;
 import com.monda.sledu.ajantha.model.Grade;
 import com.monda.sledu.ajantha.service.TutorService;
 import com.monda.sledu.ajantha.model.Lesson;
+import com.monda.sledu.ajantha.model.Topic;
+import com.monda.sledu.ajantha.model.dto.TopicDTO;
 
 @Slf4j
 @RestController
@@ -72,5 +73,14 @@ public class TutorialController {
 
         return tutorService.getAllLessonsBySubject(subjectId);
     }
+
+    @GetMapping(value = "/topics")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<TopicDTO> getAllTopicByLesson(@RequestParam Integer lessonId) {
+
+        return tutorService.getTopicsOfLesson(lessonId);
+    }
+
+
 
 }

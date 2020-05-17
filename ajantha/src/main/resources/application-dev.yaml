@@ -15,4 +15,5 @@ spring:
       enabled: true
 # set file base memory so data will not lost when application restart
 #spring.datasource.url=jdbc:h2:file:/data/demo
+#http://localhost:3005/h2-console/login.jsp?jsessionid=024e4a2143b945f65fe58836e656360c
 

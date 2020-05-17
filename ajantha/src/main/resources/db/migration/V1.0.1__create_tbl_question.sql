@@ -17,6 +17,28 @@ CREATE TABLE sledu.t_lesson (
  image_url varchar(255)
 );
 
+CREATE TABLE sledu.t_topic(
+    id int,
+    topic_id int,
+    sub_topic_id int,
+    lesson_id int,
+    topic_name varchar(255),
+    sub_topic_name varchar(255)
+);
+
+CREATE TABLE sledu.t_smart_note(
+    id int,
+    topic_id int,
+    sub_topic_id int,
+    sub_topic_name varchar(255),
+    image_def_url varchar(255),
+    definition varchar(1000),
+    theory varchar(1000),
+    image_theory_url varchar(255),
+    example varchar(1000),
+    image_example_url varchar(255)
+);
+
 CREATE TABLE sledu.t_question (
  id int,
  lesson_id int,
