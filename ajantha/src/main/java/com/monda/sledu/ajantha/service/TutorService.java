@@ -17,11 +17,16 @@ import com.monda.sledu.ajantha.repository.LessonRepository;
 import com.monda.sledu.ajantha.model.Topic;
 import com.monda.sledu.ajantha.repository.TopicRepository;
 import com.monda.sledu.ajantha.repository.QuestionRepository;
-import com.monda.sledu.ajantha.model.dto.TopicDTO;
+import com.monda.sledu.ajantha.model.dto.TopicListWithDefaultSmartNoteDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import com.monda.sledu.ajantha.model.dto.SubTopicDTO;
+import com.monda.sledu.ajantha.repository.SmartNoteRepository;
+import java.util.Collections;
+import com.monda.sledu.ajantha.model.SmartNote;
+import com.monda.sledu.ajantha.model.dto.TopicWithSubTopicListDTO;
+import java.util.stream.Collectors;
 
 @Service
 @Setter
@@ -32,14 +37,16 @@ public class TutorService {
     private GradeRepository gradeRepository;
     private LessonRepository lessonRepository;
     private TopicRepository topicRepository;
+    private SmartNoteRepository smartNoteRepository;
 
     @Autowired
-    public TutorService(QuestionRepository questionRepository, SubjectRepository subjectRepository, GradeRepository gradeRepository, LessonRepository lessonRepository, TopicRepository topicRepository){
+    public TutorService(QuestionRepository questionRepository, SubjectRepository subjectRepository, GradeRepository gradeRepository, LessonRepository lessonRepository, TopicRepository topicRepository, SmartNoteRepository smartNoteRepository ){
         this.questionRepository = questionRepository;
         this.subjectRepository = subjectRepository;
         this.gradeRepository = gradeRepository;
         this.lessonRepository = lessonRepository;
         this.topicRepository = topicRepository;
+        this.smartNoteRepository = smartNoteRepository;
     }
 
     public List<QuestionDTO> getQuestionsByLessonId(Integer lessonId){
@@ -68,37 +75,56 @@ public class TutorService {
         return lessonRepository.findBySubjectId(subjectId);
     }
 
-    public List<TopicDTO> getTopicsOfLesson(Integer lessonId){
+    public TopicListWithDefaultSmartNoteDTO getTopicsOfLessonWithDefaultSmartNote(Integer lessonId){
+        TopicListWithDefaultSmartNoteDTO topicListWithDefaultSmartNoteDTO = new TopicListWithDefaultSmartNoteDTO();
         List<Topic> rawTopicList =  topicRepository.findByLessonId(lessonId);
-        Map<Integer,TopicDTO> topicList = new HashMap<>();
+        Map<Integer, TopicWithSubTopicListDTO> topicList = new HashMap<>();
+        List<String> topicIdList = new ArrayList<>();
 
-        for(Topic topic: rawTopicList){
-            Integer topicId = topic.getTopicId();
-            if(topicList.get(topicId) == null) {
-                TopicDTO topicDTO = new TopicDTO();
-                topicDTO.setLessonId(topic.getLessonId());
-                topicDTO.setTopicId(topicId);
-                topicDTO.setTopicName(topic.getTopicName());
+        if(rawTopicList.size() > 0) {
+            for (Topic topic : rawTopicList) {
+                Integer topicId = topic.getTopicId();
+                if (topicList.get(topicId) == null) {
+                    com.monda.sledu.ajantha.model.dto.TopicWithSubTopicListDTO topicWithSubTopicListDTO = new TopicWithSubTopicListDTO();
+                    topicWithSubTopicListDTO.setLessonId(topic.getLessonId());
+                    topicWithSubTopicListDTO.setTopicId(topicId);
+                    topicWithSubTopicListDTO.setTopicName(topic.getTopicName());
 
-                List<SubTopicDTO> subTopics = new ArrayList<>();
-                SubTopicDTO subTopicDTO = new SubTopicDTO();
-                subTopicDTO.setSubTopicId(topic.getSubTopicId());
-                subTopicDTO.setSubTopicName(topic.getSubTopicName());
-                subTopicDTO.setTopicId(topicId);
-                subTopics.add(subTopicDTO);
+                    List<SubTopicDTO> subTopics = new ArrayList<>();
+                    SubTopicDTO subTopicDTO = new SubTopicDTO();
+                    subTopicDTO.setSubTopicId(topic.getSubTopicId());
+                    subTopicDTO.setSubTopicName(topic.getSubTopicName());
+                    subTopicDTO.setTopicId(topicId);
+                    subTopics.add(subTopicDTO);
 
-                topicDTO.setSubTopicList(subTopics);
-                topicList.put(topicId, topicDTO);
-            }else{
-                SubTopicDTO subTopicDTO = new SubTopicDTO();
-                subTopicDTO.setTopicId(topicId);
-                subTopicDTO.setSubTopicName(topic.getSubTopicName());
-                subTopicDTO.setSubTopicId(topic.getSubTopicId());
-                topicList.get(topicId).getSubTopicList().add(subTopicDTO);
+                    topicWithSubTopicListDTO.setSubTopicList(subTopics);
+                    topicList.put(topicId, topicWithSubTopicListDTO);
+
+                    topicIdList.add(topicId + "_" + subTopicDTO.getSubTopicId());
+                } else {
+                    SubTopicDTO subTopicDTO = new SubTopicDTO();
+                    subTopicDTO.setTopicId(topicId);
+                    subTopicDTO.setSubTopicName(topic.getSubTopicName());
+                    subTopicDTO.setSubTopicId(topic.getSubTopicId());
+                    topicList.get(topicId).getSubTopicList().add(subTopicDTO);
+
+                    topicIdList.add(topicId + "_" + subTopicDTO.getSubTopicId());
+                }
             }
 
+            // Get first subtopic smart note
+            Collections.sort(topicIdList);
+            String[] defIdArr = topicIdList.get(0).split("_");
+            Integer defTopicId = Integer.parseInt(defIdArr[0]);
+            Integer defSubTopicId = Integer.parseInt(defIdArr[1]);
+
+            SmartNote smartNote =  smartNoteRepository.findByTopicIdAndSubTopicId(defTopicId, defSubTopicId);
+
+            topicListWithDefaultSmartNoteDTO.setDefaultSmartNote(smartNote);
+            topicListWithDefaultSmartNoteDTO.setTopics(topicList.values().stream().collect(Collectors.toList()));
+
         }
-        return topicList.values().stream().collect(Collectors.toList());
+        return topicListWithDefaultSmartNoteDTO;
     }
 
 

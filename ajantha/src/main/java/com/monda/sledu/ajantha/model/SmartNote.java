@@ -31,7 +31,7 @@ public class SmartNote {
     @Column(name="image_def_url")
     private String imageDefUrl;
 
-    @Column(name="defenition")
+    @Column(name="definition")
     private String definition;
 
     @Column(name="theory")

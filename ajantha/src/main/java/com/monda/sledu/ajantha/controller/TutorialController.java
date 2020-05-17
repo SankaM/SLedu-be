@@ -18,8 +18,7 @@ import com.monda.sledu.ajantha.model.Subject;
 import com.monda.sledu.ajantha.model.Grade;
 import com.monda.sledu.ajantha.service.TutorService;
 import com.monda.sledu.ajantha.model.Lesson;
-import com.monda.sledu.ajantha.model.Topic;
-import com.monda.sledu.ajantha.model.dto.TopicDTO;
+import com.monda.sledu.ajantha.model.dto.TopicListWithDefaultSmartNoteDTO;
 
 @Slf4j
 @RestController
@@ -76,11 +75,7 @@ public class TutorialController {
 
     @GetMapping(value = "/topics")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<TopicDTO> getAllTopicByLesson(@RequestParam Integer lessonId) {
-
-        return tutorService.getTopicsOfLesson(lessonId);
+    public TopicListWithDefaultSmartNoteDTO getAllTopicByLessonWithDefaultSmartNote(@RequestParam Integer lessonId) {
+        return tutorService.getTopicsOfLessonWithDefaultSmartNote(lessonId);
     }
-
-
-
 }
