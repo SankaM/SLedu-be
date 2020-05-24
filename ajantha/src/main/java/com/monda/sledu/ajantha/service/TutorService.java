@@ -100,7 +100,7 @@ public class TutorService {
                     topicWithSubTopicListDTO.setSubTopicList(subTopics);
                     topicList.put(topicId, topicWithSubTopicListDTO);
 
-                    topicIdList.add(topicId + "_" + subTopicDTO.getSubTopicId());
+                    topicIdList.add(topicId + "_" + subTopicDTO.getSubTopicId()+"_"+topic.getLessonId());
                 } else {
                     SubTopicDTO subTopicDTO = new SubTopicDTO();
                     subTopicDTO.setTopicId(topicId);
@@ -108,7 +108,7 @@ public class TutorService {
                     subTopicDTO.setSubTopicId(topic.getSubTopicId());
                     topicList.get(topicId).getSubTopicList().add(subTopicDTO);
 
-                    topicIdList.add(topicId + "_" + subTopicDTO.getSubTopicId());
+                    topicIdList.add(topicId + "_" + subTopicDTO.getSubTopicId()+ "_" +topic.getLessonId());
                 }
             }
 
@@ -117,9 +117,9 @@ public class TutorService {
             String[] defIdArr = topicIdList.get(0).split("_");
             Integer defTopicId = Integer.parseInt(defIdArr[0]);
             Integer defSubTopicId = Integer.parseInt(defIdArr[1]);
+            Integer defLessonId = Integer.parseInt(defIdArr[2]);
 
-            SmartNote smartNote =  smartNoteRepository.findByTopicIdAndSubTopicId(defTopicId, defSubTopicId);
-
+            SmartNote smartNote =  smartNoteRepository.findByTopicIdAndSubTopicIdAndLessonId(defTopicId, defSubTopicId, defLessonId);
             topicListWithDefaultSmartNoteDTO.setDefaultSmartNote(smartNote);
             topicListWithDefaultSmartNoteDTO.setTopics(topicList.values().stream().collect(Collectors.toList()));
 
@@ -127,5 +127,7 @@ public class TutorService {
         return topicListWithDefaultSmartNoteDTO;
     }
 
-
+    public SmartNote getSmartNote(Integer lessonId, Integer topicId, Integer subTopicId){
+        return smartNoteRepository.findByTopicIdAndSubTopicIdAndLessonId(topicId, subTopicId, lessonId);
+    }
 }

@@ -19,6 +19,10 @@ import com.monda.sledu.ajantha.model.Grade;
 import com.monda.sledu.ajantha.service.TutorService;
 import com.monda.sledu.ajantha.model.Lesson;
 import com.monda.sledu.ajantha.model.dto.TopicListWithDefaultSmartNoteDTO;
+import com.monda.sledu.ajantha.service.TutorService;
+import javax.websocket.server.PathParam;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.monda.sledu.ajantha.model.SmartNote;
 
 @Slf4j
 @RestController
@@ -29,7 +33,7 @@ public class TutorialController {
     private TutorService tutorService;
 
     @Autowired
-    public TutorialController(com.monda.sledu.ajantha.service.TutorService tutorService){
+    public TutorialController(TutorService tutorService){
         this.tutorService = tutorService;
     }
 
@@ -77,5 +81,14 @@ public class TutorialController {
     @ResponseStatus(code = HttpStatus.OK)
     public TopicListWithDefaultSmartNoteDTO getAllTopicByLessonWithDefaultSmartNote(@RequestParam Integer lessonId) {
         return tutorService.getTopicsOfLessonWithDefaultSmartNote(lessonId);
+    }
+
+    @GetMapping(value = "/smartnote/{lessonId}/{topicId}/{subtopicId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public com.monda.sledu.ajantha.model.SmartNote getSmartNoteForSubTopic(@PathVariable("lessonId") Integer lessonId,
+                                                                           @PathVariable("topicId") Integer topicId,
+                                                                           @PathVariable("subtopicId") Integer subTopicId) {
+
+        return tutorService.getSmartNote(lessonId, topicId, subTopicId);
     }
 }

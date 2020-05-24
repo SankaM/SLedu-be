@@ -30,6 +30,7 @@ CREATE TABLE sledu.t_smart_note(
     id int,
     topic_id int,
     sub_topic_id int,
+    lesson_id int,
     sub_topic_name varchar(255),
     image_def_url varchar(255),
     definition varchar(1000),
@@ -38,6 +39,12 @@ CREATE TABLE sledu.t_smart_note(
     example varchar(1000),
     image_example_url varchar(255)
 );
+
+
+--CREATE TABLE sledu.t_short_note(
+--    id int,
+--
+--);
 
 CREATE TABLE sledu.t_question (
  id int,

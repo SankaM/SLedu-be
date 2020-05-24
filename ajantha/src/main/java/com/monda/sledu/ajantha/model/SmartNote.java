@@ -25,6 +25,9 @@ public class SmartNote {
     @Column(name="sub_topic_id")
     private Integer subTopicId;
 
+    @Column(name="lesson_id")
+    private Integer lessonId;
+
     @Column(name="sub_topic_name")
     private String subTopicName;
 

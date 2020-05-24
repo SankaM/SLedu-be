@@ -10,5 +10,5 @@ import com.monda.sledu.ajantha.model.SmartNote;
  */
 public interface SmartNoteRepository extends JpaRepository<SmartNote, Integer> {
 
-    SmartNote findByTopicIdAndSubTopicId(Integer topicId, Integer subTopicId);
+    SmartNote findByTopicIdAndSubTopicIdAndLessonId(Integer topicId, Integer subTopicId,Integer lessonId);
 }
